@@ -29,7 +29,7 @@ app.get("/api/books/:id", (req, res) => {
 });
 
 app.post("/api/books", (req, res) => {
-  const { title, author, price, description, excerpt } = req.body;
+  const { title, author, price, description, excerpt, year, cover, genre } = req.body;
 
   if (!title || !author || price === undefined) {
     return res.status(400).json({ message: "title, author and price are required" });
@@ -44,6 +44,9 @@ app.post("/api/books", (req, res) => {
     title,
     author,
     price: Number(price),
+    year: year || "",
+    cover: cover || "",
+    genre: genre || "",
     description: description || "",
     excerpt: excerpt || "",
   };
@@ -58,15 +61,8 @@ app.put("/api/books/:id", (req, res) => {
   const index = books.findIndex((b) => b.id === Number(req.params.id));
   if (index === -1) return res.status(404).json({ message: "Book not found" });
 
-  const { title, author, price, description, excerpt } = req.body;
-  books[index] = {
-    ...books[index],
-    title: title ?? books[index].title,
-    author: author ?? books[index].author,
-    price: price !== undefined ? Number(price) : books[index].price,
-    description: description ?? books[index].description ?? "",
-    excerpt: excerpt ?? books[index].excerpt ?? "",
-  };
+  books[index] = { ...books[index], ...req.body, id: books[index].id };
+  if (price !== undefined) books[index].price = Number(price);
   writeBooks(books);
 
   res.json(books[index]);
