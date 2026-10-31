@@ -16,21 +16,11 @@
   --font-big: "Caveat", "Patrick Hand", "Segoe Print", cursive;
   --font-stamp: "Special Elite", "Courier New", monospace;
 
-  --animate-swing-open: swing-open 1.05s cubic-bezier(0.6, 0.05, 0.3, 1) 0.35s both;
   --animate-fade-in: fade-in 0.25s ease both;
-  --animate-page-in: page-in 0.6s 0.6s ease both;
 
-  @keyframes swing-open {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(-179.5deg); }
-  }
   @keyframes fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
-  }
-  @keyframes page-in {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: none; }
   }
 }
 

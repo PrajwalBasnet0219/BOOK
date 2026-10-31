@@ -1,23 +1,50 @@
+import { useEffect, useRef } from "react";
 import type { Book } from "./api";
 
 const PAGE =
   "text-ink bg-[#fffdf4] bg-[image:repeating-linear-gradient(0deg,transparent_0_26px,rgba(110,97,87,0.16)_26px_27px)]";
 
 export default function Preview({ book, onClose }: { book: Book | null; onClose: () => void }) {
+  const coverRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = coverRef.current;
+    if (!el) return;
+    let anim: Animation | undefined;
+    try {
+      anim = el.animate(
+        [{ transform: "rotateY(0deg)" }, { transform: "rotateY(-179.5deg)" }],
+        { duration: 1050, delay: 150, easing: "cubic-bezier(.6,.05,.3,1)", fill: "backwards" }
+      );
+    } catch {
+      anim = undefined;
+    }
+    const fallback = window.setTimeout(() => anim?.cancel(), 1500);
+    return () => {
+      window.clearTimeout(fallback);
+      anim?.cancel();
+    };
+  }, [book]);
+
   if (!book) return null;
   const excerpt = book.excerpt;
 
   return (
     <div
-      className="fixed inset-0 z-20 grid place-items-center p-6 bg-black/80 animate-fade-in"
+      className="fixed inset-0 z-20 grid place-items-center p-6"
       onClick={onClose}
     >
+      <span
+        className="absolute inset-0 bg-black/80 animate-fade-in"
+        aria-hidden="true"
+        onClick={onClose}
+      />
       <div
         className="relative grid grid-cols-1 sm:grid-cols-2 w-[min(680px,100%)] min-h-[460px] font-hand [perspective:1600px]"
         onClick={(e) => e.stopPropagation()}
       >
         <span
-          className="absolute top-3.5 bottom-3.5 right-2 rounded-r-lg hidden sm:block bg-[#fbf5e4] bg-[image:repeating-linear-gradient(180deg,#fbf5e4_0_3px,#dccfa9_3px_5px)] shadow-[0_4px_10px_rgba(0,0,0,0.35),inset_2px_0_5px_rgba(0,0,0,0.15)]"
+          className="absolute top-3.5 bottom-3.5 right-2 w-2.5 rounded-r-lg hidden sm:block bg-[#fbf5e4] bg-[image:repeating-linear-gradient(180deg,#fbf5e4_0_3px,#dccfa9_3px_5px)] shadow-[0_4px_10px_rgba(0,0,0,0.35),inset_2px_0_5px_rgba(0,0,0,0.15)]"
           aria-hidden="true"
         />
 
@@ -49,7 +76,7 @@ export default function Preview({ book, onClose }: { book: Book | null; onClose:
         </div>
 
         <div
-          className={`${PAGE} relative z-10 rounded-[6px_10px_10px_6px] px-7 py-7 overflow-hidden shadow-[inset_14px_0_18px_-12px_rgba(90,60,30,0.55),0_8px_24px_rgba(0,0,0,0.35)] max-sm:rounded-lg animate-page-in`}
+          className={`${PAGE} relative z-10 rounded-[6px_10px_10px_6px] px-7 py-7 overflow-hidden shadow-[inset_14px_0_18px_-12px_rgba(90,60,30,0.55),0_8px_24px_rgba(0,0,0,0.35)] max-sm:rounded-lg`}
         >
           <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">first page</h3>
           {excerpt ? (
@@ -66,7 +93,11 @@ export default function Preview({ book, onClose }: { book: Book | null; onClose:
           </p>
         </div>
 
-        <div className="absolute inset-y-0 right-0 w-1/2 max-sm:hidden pointer-events-none [transform-origin:left_center] [transform-style:preserve-3d] animate-swing-open">
+        <div
+          ref={coverRef}
+          className="absolute inset-y-0 right-0 w-1/2 max-sm:hidden motion-reduce:hidden pointer-events-none [transform-origin:left_center] [transform-style:preserve-3d] [will-change:transform]"
+          style={{ transform: "rotateY(-179.5deg)" }}
+        >
           <div className="absolute inset-0 overflow-hidden [backface-visibility:hidden] rounded-[6px_10px_10px_6px] grid place-items-center bg-card shadow-[inset_0_0_0_4px_rgba(255,255,255,0.25),6px_10px_22px_rgba(0,0,0,0.4)]">
             {book.cover && (
               <img src={book.cover} alt="" className="absolute inset-0 size-full object-cover" />
