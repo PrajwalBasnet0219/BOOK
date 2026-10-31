@@ -1,22 +1,36 @@
-import { useEffect, useState } from "react";
-import { getBooks, addBook, updateBook, deleteBook } from "./api.js";
-import Preview from "./Preview.jsx";
+import { useEffect, useState, type ChangeEvent, type CSSProperties, type FormEvent } from "react";
+import { getBooks, addBook, updateBook, deleteBook } from "./api";
+import type { Book } from "./api";
+import Preview from "./Preview";
 
-const EMPTY_FORM = { title: "", author: "", price: "", description: "", excerpt: "" };
+interface FormState {
+  title: string;
+  author: string;
+  price: string;
+  description: string;
+  excerpt: string;
+}
+
+type Page = "shop" | "entry";
+
+const EMPTY_FORM: FormState = { title: "", author: "", price: "", description: "", excerpt: "" };
 
 const TAPE_COLORS = ["#e07a5f", "#3d5a80", "#81b29a", "#f2cc8f", "#9b5de5", "#e63946"];
 const GENRES = ["All", "Fantasy", "Romance", "Classic", "Light Novel"];
 
-function tapeCSSVar(id) {
-  return { "--tape": TAPE_COLORS[id % TAPE_COLORS.length] };
+function cardStyle(id: number, tilt: string): CSSProperties {
+  return {
+    "--tape": TAPE_COLORS[id % TAPE_COLORS.length],
+    "--tilt": tilt,
+  } as CSSProperties;
 }
 
-function Washi({ className = "", style = {}, small = false }) {
+function Washi({ className = "", style, small = false }: { className?: string; style?: CSSProperties; small?: boolean }) {
   return (
     <span
       className={`absolute -top-3 ${
         small ? "w-[88px] h-5" : "w-[110px] h-[26px]"
-      } bg-[color:var(--tape)] bg-[image:repeating-linear-gradient(45deg,rgba(255,255,255,0.4)_0_6px,transparent_6px_12px)] opacity-95 shadow-[0_1px_3px_rgba(0,0,0,0.35)] ${className}`}
+      } bg-[color:var(--tape,#ff4f6e)] bg-[image:repeating-linear-gradient(45deg,rgba(255,255,255,0.4)_0_6px,transparent_6px_12px)] opacity-95 shadow-[0_1px_3px_rgba(0,0,0,0.35)] ${className}`}
       style={style}
       aria-hidden="true"
     />
@@ -41,14 +55,14 @@ const POLA =
 const LABEL =
   "block mb-1 font-stamp text-[10.5px] tracking-[1.6px] uppercase text-inksoft";
 
-const chip = (active) =>
+const chip = (active: boolean) =>
   `px-4 py-1.5 rounded-full border font-hand text-sm sm:text-base transition-all duration-150 cursor-pointer ${
     active
       ? "bg-blush border-blush text-white shadow-[0_3px_10px_rgba(255,79,110,0.35)]"
       : "border-blush/50 text-dim hover:border-blush hover:text-paper"
   }`;
 
-function initialsOf(title) {
+function initialsOf(title: string): string {
   return (
     title
       .split(" ")
@@ -60,19 +74,19 @@ function initialsOf(title) {
 }
 
 export default function App() {
-  const [page, setPage] = useState("shop");
+  const [page, setPage] = useState<Page>("shop");
   const [flash, setFlash] = useState("");
-  const [books, setBooks] = useState([]);
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [editingId, setEditingId] = useState(null);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [previewBook, setPreviewBook] = useState(null);
+  const [previewBook, setPreviewBook] = useState<Book | null>(null);
   const [genre, setGenre] = useState("All");
 
   useEffect(() => {
     loadBooks();
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setPreviewBook(null);
     };
     window.addEventListener("keydown", onKey);
@@ -83,7 +97,7 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [page]);
 
-  async function loadBooks() {
+  async function loadBooks(): Promise<void> {
     try {
       setLoading(true);
       setBooks(await getBooks());
@@ -95,34 +109,34 @@ export default function App() {
     }
   }
 
-  function goEntry() {
+  function goEntry(): void {
     setFlash("");
     setPage("entry");
   }
 
-  function goShop() {
+  function goShop(): void {
     setPage("shop");
   }
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+    setForm({ ...form, [e.target.name]: e.target.value } as FormState);
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: FormEvent): Promise<void> {
     e.preventDefault();
-    const wasEditing = editingId !== null;
+    const draft = { ...form, price: Number(form.price) };
     try {
-      if (wasEditing) {
-        await updateBook(editingId, form);
+      if (editingId !== null) {
+        await updateBook(editingId, draft);
       } else {
-        await addBook(form);
+        await addBook(draft);
       }
       setForm(EMPTY_FORM);
       setEditingId(null);
       await loadBooks();
       goShop();
       setFlash(
-        wasEditing
+        editingId !== null
           ? "changes saved and pinned back on the wall"
           : "stamped into the catalogue - it is on the wall now"
       );
@@ -132,11 +146,11 @@ export default function App() {
     }
   }
 
-  function startEdit(book) {
+  function startEdit(book: Book): void {
     setForm({
       title: book.title,
       author: book.author,
-      price: book.price,
+      price: String(book.price),
       description: book.description || "",
       excerpt: book.excerpt || "",
     });
@@ -144,13 +158,13 @@ export default function App() {
     goEntry();
   }
 
-  function cancelEntry() {
+  function cancelEntry(): void {
     setForm(EMPTY_FORM);
     setEditingId(null);
     goShop();
   }
 
-  async function handleDelete(id) {
+  async function handleDelete(id: number): Promise<void> {
     try {
       await deleteBook(id);
       await loadBooks();
@@ -163,7 +177,7 @@ export default function App() {
     genre === "All"
       ? books
       : books.filter((b) => (b.genre || "").toLowerCase() === genre.toLowerCase());
-  const total = visible.reduce((sum, b) => sum + Number(b.price || 0), 0);
+  const total = visible.reduce((sum: number, b) => sum + Number(b.price || 0), 0);
 
   const proofTitle = form.title.trim() || "Untitled entry";
   const proofAuthor = form.author.trim() || "an unknown author";
@@ -306,7 +320,7 @@ export default function App() {
                     <textarea
                       className={AREA}
                       name="description"
-                      rows="4"
+                      rows={4}
                       placeholder="Two honest sentences beat five fancy ones."
                       value={form.description}
                       onChange={handleChange}
@@ -318,7 +332,7 @@ export default function App() {
                   <textarea
                     className={AREA}
                     name="excerpt"
-                    rows="4"
+                    rows={4}
                     placeholder="The first lines a reader would see when the book opens…"
                     value={form.excerpt}
                     onChange={handleChange}
@@ -347,7 +361,7 @@ export default function App() {
           <aside className="space-y-6">
             <div
               className={`${POLA} mx-auto w-full max-w-[280px] shadow-[0_16px_36px_rgba(0,0,0,0.55)]`}
-              style={{ ...tapeCSSVar(editingId ?? proofNo), "--tilt": "2deg" }}
+              style={cardStyle(editingId ?? proofNo, "2deg")}
             >
               <Washi style={{ left: "50%", marginLeft: "-55px", transform: "rotate(-3deg)" }} />
               {editingId !== null && (
@@ -474,7 +488,7 @@ export default function App() {
                   <article
                     key={book.id}
                     className={`${POLA} shadow-[4px_8px_20px_rgba(0,0,0,0.5)] group`}
-                    style={{ ...tapeCSSVar(book.id), "--tilt": `${((idx % 4) - 1.5) * 0.9}deg` }}
+                    style={cardStyle(book.id, `${((idx % 4) - 1.5) * 0.9}deg`)}
                   >
                     <Washi
                       style={{ left: "50%", marginLeft: "-55px", transform: "rotate(-3deg)" }}

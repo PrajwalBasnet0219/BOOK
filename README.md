@@ -1,8 +1,8 @@
-# 📚 Book Store — Internship Task (React + Node.js + JSON)
+# Book Store — Internship Task (React + TypeScript + Node.js + JSON)
 
 Dear Intern,
 
-Welcome to Gritfeat Solution! For your first task you will build a simple full-stack **Book Store** application. The tech is **React** on the frontend, **Node.js (Express)** on the backend, and all data is stored in a plain **JSON file** (`server/books.json`) — no real database yet.
+Welcome to Gritfeat Solution! For your first task you will build a simple full-stack **Book Store** application. The tech is **React (in TypeScript, `.tsx` files)** on the frontend, **Node.js (Express)** on the backend, and all data is stored in a plain **JSON file** (`server/books.json`) — no real database yet.
 
 Please work through the task list below, in order, and tick each item as you finish it. Bring the finished list to your mentor for review.
 
@@ -11,7 +11,7 @@ Warm regards,
 
 ---
 
-## ✅ Task List
+## Task List
 
 ### 0. Setup
 From the **project root** you can either use the shortcut:
@@ -37,8 +37,8 @@ or the classic way:
 - [ ] `DELETE /api/books/:id` — remove one book, or `404` if it doesn't exist.
 - [ ] Test every route with the app or with an API tool (Postman/Thunder).
 
-### 2. Frontend — connect the UI in `client/src/App.jsx` and `client/src/api.js`
-- [ ] `api.js` — write functions that call each backend route with `fetch`.
+### 2. Frontend — connect the UI in `client/src/App.tsx` and `client/src/api.ts`
+- [ ] `api.ts` — write typed functions that call each backend route with `fetch`.
 - [ ] Load and show all books on the page (Read).
 - [ ] Add a book from the form (Create).
 - [ ] Add an "Edit" button that fills the form with a book's data and saves the change (Update).
@@ -61,23 +61,25 @@ or the classic way:
 
 ---
 
-## 📁 Project structure
+## Project structure
 
 | File | What it does |
 |------|--------------|
 | `server/server.js` | Express API — all CRUD routes |
-| `server/books.json` | The "database" (3 starter books) |
-| `client/src/App.jsx` | React UI — form + book list |
-| `client/src/api.js` | All fetch calls to the backend in one place |
-| `client/src/styles.css` | Scrapbook theme (paper, tape, polaroids, stickers) |
+| `server/books.json` | The "database" (4 starter books) |
+| `client/src/App.tsx` | React UI — shop page + entry page router |
+| `client/src/Preview.tsx` | The open-book peek-inside modal |
+| `client/src/api.ts` | Typed fetch calls to the backend in one place |
+| `client/src/styles.css` | Tailwind v4 `@theme` tokens + book-open animation keyframes |
+| `client/tsconfig.json` | TypeScript compiler config (strict mode) |
 
-> 📌 **Note:** a working reference version is already included in this folder. Try to implement each task yourself first (in an empty copy or from scratch files), then compare your solution against the reference to see what you missed.
+> **Note:** a working reference version is already included in this folder. Try to implement each task yourself first (in an empty copy or from scratch files), then compare your solution against the reference to see what you missed.
 
-**Rules:** use only the libraries already listed in the two `package.json` files; keep the scrapbook design; and test after every change.
+**Rules:** use only the libraries already listed in the two `package.json` files; keep the dark boutique design (styled with Tailwind utilities); and test after every change.
 
 ---
 
-## 🚀 Publishing the app (after you finish the tasks)
+## Publishing the app (after you finish the tasks)
 
 This section is the mentor-approved way to put the app online with **one free server** (Render).
 
@@ -92,7 +94,7 @@ visitor → https://your-app.onrender.com → Express
                                         └── anything else → client/dist (the React app)
 ```
 
-That's why `client/src/api.js` uses `http://localhost:3001/api/books` **only in dev**, and
+That's why `client/src/api.ts` uses `http://localhost:3001/api/books` **only in dev**, and
 the relative `/api/books` in production.
 
 ### Step 1 — try it locally first
@@ -127,9 +129,9 @@ git push -u origin main
 3. Settings:
    - **Build command:** `npm install --prefix server && npm run build:client`
    - **Start command:** `npm start --prefix server`
-4. Click **Create Web Service** → wait a few minutes → open your URL. 🎉
+4. Click **Create Web Service** → wait a few minutes → open your URL.
 
-### ⚠️ The one catch: your data
+### The one catch: your data
 
 On Render's free plan the disk is **temporary** — every restart or redeploy resets
 `server/books.json` back to the starter books. That's fine for a demo. Removing this

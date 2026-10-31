@@ -1,9 +1,10 @@
+import type { Book } from "./api";
+
 const PAGE =
   "text-ink bg-[#fffdf4] bg-[image:repeating-linear-gradient(0deg,transparent_0_26px,rgba(110,97,87,0.16)_26px_27px)]";
 
-export default function Preview({ book, onClose }) {
+export default function Preview({ book, onClose }: { book: Book | null; onClose: () => void }) {
   if (!book) return null;
-  const about = book.description || book.about;
   const excerpt = book.excerpt;
 
   return (
@@ -16,7 +17,7 @@ export default function Preview({ book, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <span
-          className="absolute top-3.5 bottom-3.5 right-2 rounded-r-lg hidden sm:block bg-[#fbf5e4] bg-[image:repeating-linear-gradient(180deg,#fbf5e4_0_3px,#dccfa9_3px_5px)] bg-[length:auto_3px] shadow-[0_4px_10px_rgba(0,0,0,0.35),inset_2px_0_5px_rgba(0,0,0,0.15)]"
+          className="absolute top-3.5 bottom-3.5 right-2 rounded-r-lg hidden sm:block bg-[#fbf5e4] bg-[image:repeating-linear-gradient(180deg,#fbf5e4_0_3px,#dccfa9_3px_5px)] shadow-[0_4px_10px_rgba(0,0,0,0.35),inset_2px_0_5px_rgba(0,0,0,0.15)]"
           aria-hidden="true"
         />
 
@@ -24,7 +25,7 @@ export default function Preview({ book, onClose }) {
           className={`${PAGE} relative z-10 rounded-[10px_6px_6px_10px] p-7 pb-5 overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.35)] max-sm:mb-3.5 max-sm:rounded-lg`}
         >
           <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">about this book</h3>
-          <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{about}</p>
+          <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{book.description}</p>
           <div className="text-[15px]">
             <p className="my-1">
               <span className="inline-block w-14 text-xs tracking-widest text-inksoft">
@@ -92,7 +93,7 @@ export default function Preview({ book, onClose }) {
             className={`${PAGE} absolute inset-0 overflow-hidden [backface-visibility:hidden] rounded-lg [transform:rotateY(180deg)] p-7 pb-14 shadow-[inset_-14px_0_22px_rgba(90,60,30,0.3)]!`}
           >
             <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">about this book</h3>
-            <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{about}</p>
+            <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{book.description}</p>
             <div className="text-[15px]">
               <p className="my-1">
                 <span className="inline-block w-14 text-xs tracking-widest text-inksoft">
@@ -142,7 +143,7 @@ export default function Preview({ book, onClose }) {
   );
 }
 
-function initialsOf(title) {
+function initialsOf(title: string): string {
   return (
     title
       .split(" ")
