@@ -1,3 +1,6 @@
+const PAGE =
+  "text-ink bg-[#fffdf4] bg-[image:repeating-linear-gradient(0deg,transparent_0_26px,rgba(110,97,87,0.16)_26px_27px)]";
+
 export default function Preview({ book, onClose }) {
   if (!book) return null;
   const about = book.description || book.about;
@@ -5,19 +8,21 @@ export default function Preview({ book, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-20 grid place-items-center p-6 bg-black/80 animate-[fade-in_0.25s_ease_both]"
+      className="fixed inset-0 z-20 grid place-items-center p-6 bg-black/80 animate-fade-in"
       onClick={onClose}
     >
       <div
-        className="open-book relative grid grid-cols-1 sm:grid-cols-2 w-[min(680px,100%)] min-h-[460px] font-hand"
+        className="relative grid grid-cols-1 sm:grid-cols-2 w-[min(680px,100%)] min-h-[460px] font-hand [perspective:1600px]"
         onClick={(e) => e.stopPropagation()}
       >
         <span
-          className="page-block absolute top-3.5 bottom-3.5 right-2 rounded-r-lg hidden sm:block"
+          className="absolute top-3.5 bottom-3.5 right-2 rounded-r-lg hidden sm:block bg-[#fbf5e4] bg-[image:repeating-linear-gradient(180deg,#fbf5e4_0_3px,#dccfa9_3px_5px)] bg-[length:auto_3px] shadow-[0_4px_10px_rgba(0,0,0,0.35),inset_2px_0_5px_rgba(0,0,0,0.15)]"
           aria-hidden="true"
         />
 
-        <div className="page-paper relative z-10 rounded-[10px_6px_6px_10px] p-7 pb-5 overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:invisible sm:static max-sm:mb-3.5 max-sm:rounded-lg">
+        <div
+          className={`${PAGE} relative z-10 rounded-[10px_6px_6px_10px] p-7 pb-5 overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.35)] max-sm:mb-3.5 max-sm:rounded-lg`}
+        >
           <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">about this book</h3>
           <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{about}</p>
           <div className="text-[15px]">
@@ -42,31 +47,28 @@ export default function Preview({ book, onClose }) {
           </div>
         </div>
 
-        <div className="page-paper relative z-10 rounded-[6px_10px_10px_6px] px-7 py-7 overflow-hidden shadow-[inset_14px_0_18px_-12px_rgba(90,60,30,0.55),0_8px_24px_rgba(0,0,0,0.35)] max-sm:rounded-lg animate-[page-in_0.6s_0.6s_ease_both]">
+        <div
+          className={`${PAGE} relative z-10 rounded-[6px_10px_10px_6px] px-7 py-7 overflow-hidden shadow-[inset_14px_0_18px_-12px_rgba(90,60,30,0.55),0_8px_24px_rgba(0,0,0,0.35)] max-sm:rounded-lg animate-page-in`}
+        >
           <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">first page</h3>
           {excerpt ? (
-            <p className="m-0 text-[17px] leading-[1.6] italic text-[#4a3c31] dropcap">
+            <p className="m-0 mb-6 text-[17px] leading-[1.6] italic text-[#4a3c31] first-letter:float-left first-letter:mr-2 first-letter:mt-0.5 first-letter:font-big first-letter:font-bold first-letter:text-[46px] first-letter:leading-[0.85] first-letter:text-[#6d4405]">
               {excerpt}
             </p>
           ) : (
-            <p className="m-0 text-[17px] leading-[1.6] italic text-inksoft">
+            <p className="m-0 mb-6 text-[17px] leading-[1.6] italic text-inksoft">
               this book has not been opened yet — its pages are still blank…
             </p>
           )}
-          <p className="mt-4 mb-0 text-right text-[13px] text-inksoft">
+          <p className="absolute right-7 bottom-5 m-0 pt-2 border-t border-inksoft/40 text-[12.5px] tracking-wide text-inksoft">
             — opening lines{book.year ? ` · ${book.year}` : ""}
           </p>
-          <span className="absolute right-0 bottom-0 size-[34px] bg-[linear-gradient(315deg,transparent_49%,#e6d7b8_50%,#fffdf4_62%)] shadow-[-2px_-2px_2px_rgba(0,0,0,0.12)]" />
         </div>
 
-        <div className="cover-flop absolute top-0 right-0 w-1/2 max-sm:hidden pointer-events-none">
-          <div className="face rounded-[6px_10px_10px_6px] grid place-items-center bg-card shadow-[inset_0_0_0_4px_rgba(255,255,255,0.25),6px_10px_22px_rgba(0,0,0,0.4)]">
+        <div className="absolute inset-y-0 right-0 w-1/2 max-sm:hidden pointer-events-none [transform-origin:left_center] [transform-style:preserve-3d] animate-swing-open">
+          <div className="absolute inset-0 overflow-hidden [backface-visibility:hidden] rounded-[6px_10px_10px_6px] grid place-items-center bg-card shadow-[inset_0_0_0_4px_rgba(255,255,255,0.25),6px_10px_22px_rgba(0,0,0,0.4)]">
             {book.cover && (
-              <img
-                src={book.cover}
-                alt=""
-                className="absolute inset-0 size-full object-cover"
-              />
+              <img src={book.cover} alt="" className="absolute inset-0 size-full object-cover" />
             )}
             <span
               className="absolute inset-[13px] border-2 border-white/70 rounded pointer-events-none z-[2]"
@@ -86,10 +88,12 @@ export default function Preview({ book, onClose }) {
               aria-hidden="true"
             />
           </div>
-          <div className="face page-paper rounded-lg p-7 pb-14 [transform:rotateY(180deg)] shadow-[inset_-14px_0_22px_rgba(90,60,30,0.3)!important]">
+          <div
+            className={`${PAGE} absolute inset-0 overflow-hidden [backface-visibility:hidden] rounded-lg [transform:rotateY(180deg)] p-7 pb-14 shadow-[inset_-14px_0_22px_rgba(90,60,30,0.3)]!`}
+          >
             <h3 className="m-0 mb-3 font-big text-2xl text-[#35591f]">about this book</h3>
-            <p className="m-0 mb-3.5 text-[17px] leading-relaxed text-ink">{about}</p>
-            <div className="text-[15px] text-ink">
+            <p className="m-0 mb-3.5 text-[17px] leading-relaxed">{about}</p>
+            <div className="text-[15px]">
               <p className="my-1">
                 <span className="inline-block w-14 text-xs tracking-widest text-inksoft">
                   title
@@ -108,25 +112,25 @@ export default function Preview({ book, onClose }) {
                 </span>
                 {book.year || "—"}
               </p>
-              <p className="inline-flex items-center gap-2 mt-1 px-3 py-1 bg-[#fff3c4] border-[1.5px] border-dashed border-[#c9a227] text-goldink [clip-path:polygon(0_50%,8px_0,100%_0,100%_100%,8px_100%)]">
+              <p className="inline-flex items-center gap-2 mt-1 px-3 py-1 bg-[#fff3c4] border-[1.5px] border-dashed border-[#c9a227] text-[#7a5c00] [clip-path:polygon(0_50%,8px_0,100%_0,100%_100%,8px_100%)]">
                 <span
-                  className="size-1.5 rounded-full bg-[#f6ecd7] shadow-[inset_0_0_2px_rgba(0,0,0,0.45)]"
+                  className="inline-block size-1.5 rounded-full bg-[#f6ecd7] shadow-[inset_0_0_2px_rgba(0,0,0,0.45)]"
                   aria-hidden="true"
                 />
                 ${Number(book.price).toFixed(2)}
               </p>
             </div>
-            <span className="absolute left-1/2 -translate-x-1/2 -rotate-[1.5deg] bottom-4 pt-2 border-t-[1.5px] border-inksoft/40 text-[12.5px] tracking-wide text-inksoft whitespace-nowrap">
-              ex libris · Paperbäck ♡
+            <span className="absolute left-1/2 -translate-x-1/2 bottom-4 -rotate-[1.5deg] pt-2 border-t border-inksoft/40 text-[12.5px] tracking-wide text-inksoft whitespace-nowrap">
+              ex libris · Paperbäck
             </span>
           </div>
         </div>
 
         <button
-          className="absolute -bottom-14 left-1/2 -translate-x-1/2 max-sm:static max-sm:translate-x-0 max-sm:mt-4 px-4 py-1.5 bg-[#fff3c4] border-[1.5px] border-dashed border-[#c9a227] text-goldink rounded-full font-hand text-sm cursor-pointer hover:bg-[#fbe89a] z-30"
+          className="absolute -bottom-14 left-1/2 -translate-x-1/2 max-sm:static max-sm:translate-x-0 max-sm:mt-4 px-4 py-1.5 bg-[#fff3c4] border-[1.5px] border-dashed border-[#c9a227] text-[#7a5c00] rounded-full font-hand text-sm cursor-pointer hover:bg-[#fbe89a] z-30"
           onClick={onClose}
         >
-          close the book ✕
+          close the book
         </button>
 
         <span
@@ -139,10 +143,12 @@ export default function Preview({ book, onClose }) {
 }
 
 function initialsOf(title) {
-  return title
-    .split(" ")
-    .filter((w) => w.length > 1)
-    .slice(0, 2)
-    .map((w) => w[0].toUpperCase())
-    .join("");
+  return (
+    title
+      .split(" ")
+      .filter((w) => w.length > 1)
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join("") || "?"
+  );
 }
