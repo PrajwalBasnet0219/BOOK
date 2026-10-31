@@ -36,8 +36,6 @@ body {
   overflow: clip;
 }
 
-/* ---------- coffee stains ---------- */
-
 .coffee-stain {
   position: absolute;
   top: 22px;
@@ -65,8 +63,6 @@ body {
   height: 180px;
   opacity: 0.6;
 }
-
-/* ---------- header: cork board ---------- */
 
 .board-header {
   position: relative;
@@ -180,8 +176,6 @@ body {
   stroke-linejoin: round;
 }
 
-/* ---------- sticky notes ---------- */
-
 .sticky-note {
   display: block;
   max-width: 560px;
@@ -204,8 +198,6 @@ body {
   left: 18px;
   font-size: 20px;
 }
-
-/* ---------- add book: library catalogue card ---------- */
 
 .add-section {
   display: grid;
@@ -436,8 +428,6 @@ body {
   }
 }
 
-/* ---------- the "DUE BACK NEVER" library stamp card ---------- */
-
 .due-note {
   align-self: center;
   background: repeating-linear-gradient(
@@ -467,8 +457,6 @@ body {
   transform: rotate(-6deg);
   border-radius: 3px;
 }
-
-/* ---------- wall of polaroids ---------- */
 
 .wall-title {
   position: relative;
@@ -554,8 +542,6 @@ body {
 .polaroid .washi {
   transform: rotate(-3deg);
 }
-
-/* the "photo" inside the polaroid — now a real book cover */
 
 .photo {
   position: relative;
@@ -657,8 +643,6 @@ body {
   );
 }
 
-/* polaroid caption */
-
 .caption {
   padding: 12px 4px 2px;
   text-align: center;
@@ -730,7 +714,7 @@ body {
   color: #fff;
 }
 
-/* ---------- empty / loading / footer ---------- */.empty-slot {
+.empty-slot {
   text-align: center;
 }
 
@@ -763,8 +747,6 @@ body {
   font-size: 15px;
 }
 
-/* ---------- responsive ---------- */
-
 @media (max-width: 720px) {
   .add-section {
     grid-template-columns: 1fr;
@@ -785,8 +767,6 @@ body {
     height: 92px;
   }
 }
-
-/* ---------- peek inside: a book that opens ---------- */
 
 .modal-backdrop {
   position: fixed;
@@ -828,8 +808,6 @@ body {
   pointer-events: none;
 }
 
-/* the paper block of a closed book (front cover sits on top of it) */
-
 .page-block {
   position: absolute;
   top: 14px;
@@ -845,8 +823,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), inset 2px 0 5px rgba(0, 0, 0, 0.15);
   z-index: 0;
 }
-
-/* pages (only the first page shows on a desktop open) */
 
 .page {
   position: relative;
@@ -876,9 +852,6 @@ body {
 .mobile-only {
   display: none;
 }
-
-/* desktop: the flipped cover-back plays the role of the left page,
-   so the real left page only exists on mobile (visibility keeps its grid slot) */
 
 .page-left {
   visibility: hidden;
@@ -968,8 +941,6 @@ body {
   color: var(--ink-soft);
 }
 
-/* the front cover — starts closed over the page block, then swings open */
-
 .cover-flop {
   position: absolute;
   top: 0;
@@ -1049,8 +1020,6 @@ body {
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* inner face = the inside of the cover, where "about" is written */
-
 .face-back {
   transform: rotateY(180deg);
   background:
@@ -1078,8 +1047,6 @@ body {
   color: var(--ink-soft);
   white-space: nowrap;
 }
-
-/* close chip */
 
 .modal-close {
   position: absolute;
