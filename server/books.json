@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "price": 12.99,
+    "year": 1997,
+    "excerpt": "Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much. They were the last people you'd expect to be involved in anything strange or mysterious, because they just didn't hold with such nonsense.",
+    "description": "An orphaned boy discovers on his 11th birthday that he is a wizard, and that a letter — delivered by an owl — is about to change his whole life."
+  },
+  {
+    "id": 2,
+    "title": "P.S. I Love You",
+    "author": "Cecelia Ahern",
+    "price": 11.99,
+    "year": 2004,
+    "excerpt": "Holly held the envelope in her hands and stared at the neat handwriting on the front: a list of P.S. I Love You — the first letter of many her late husband had secretly arranged. Gerry had thought of everything, even the years when he wouldn't be there.",
+    "description": "A young widow discovers a bundle of letters her husband left behind — each one coaxing her back into living, one small brave step at a time."
+  },
+  {
+    "id": 3,
+    "title": "The King's Proposal",
+    "author": "Fujino Omori (light novel)",
+    "price": 13.99,
+    "year": 2021,
+    "excerpt": "The king knelt before the girl who had pulled the sword, and every knight in the great hall went quiet. A proposal, he said — not of marriage, but of war, of crowns, and of the end of everything she had ever believed in.",
+    "description": "A light novel of crowns and court intrigue: a chance encounter drags a common girl into a royal bargain that could reshape the kingdom."
+  },
+  {
+    "id": 4,
+    "title": "Rehavane",
+    "author": "Prajwal Basnet",
+    "price": 12.29,
+    "description": "A book about how a boy was teleported to a planet which is liveable but have danger everywhere will he able to surive in this world.",
+    "excerpt": ""
+  }
+]

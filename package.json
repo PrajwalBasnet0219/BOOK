@@ -1,0 +1,14 @@
+{
+  "name": "bookstore-project",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "setup": "npm install --prefix server && npm install --prefix client",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client && rm -rf server/public && cp -r client/dist server/public"
+  }
+}
