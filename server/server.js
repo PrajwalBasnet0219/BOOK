@@ -57,6 +57,7 @@ app.post("/api/books", (req, res) => {
 });
 
 app.put("/api/books/:id", (req, res) => {
+  const { price } = req.body;
   const books = readBooks();
   const index = books.findIndex((b) => b.id === Number(req.params.id));
   if (index === -1) return res.status(404).json({ message: "Book not found" });
@@ -79,7 +80,6 @@ app.delete("/api/books/:id", (req, res) => {
   res.json({ message: "Book deleted" });
 });
 
-// serve the built React app (used in production — see README "Publishing")
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res) => {
