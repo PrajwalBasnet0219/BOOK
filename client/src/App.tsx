@@ -442,7 +442,7 @@ export default function App() {
             <figure className="relative justify-self-center w-[210px] p-2.5 pb-3.5 m-0 bg-paper shadow-[4px_8px_22px_rgba(0,0,0,0.55)] rotate-3">
               <Washi small style={{ left: "50%", marginLeft: "-44px" }} />
               <img
-                src={books[0]?.cover || "/covers/harrypotter.jpg"}
+                src={books[0]?.cover || "/covers/harry-potter.jpg"}
                 alt=""
                 className="block w-full aspect-[2/3] object-cover"
               />

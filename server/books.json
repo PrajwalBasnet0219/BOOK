@@ -6,7 +6,7 @@
     "price": 12.99,
     "year": 1997,
     "genre": "Fantasy",
-    "cover": "/covers/harrypotter.jpg",
+    "cover": "/covers/harry-potter.jpg",
     "excerpt": "Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much. They were the last people you'd expect to be involved in anything strange or mysterious, because they just didn't hold with such nonsense.",
     "description": "An orphaned boy discovers on his 11th birthday that he is a wizard, and that a letter — delivered by an owl — is about to change his whole life."
   },
@@ -17,7 +17,7 @@
     "price": 11.99,
     "year": 2004,
     "genre": "Romance",
-    "cover": "/covers/psiloveu.jpg",
+    "cover": "/covers/ps-i-love-you.jpg",
     "excerpt": "Holly held the envelope in her hands and stared at the neat handwriting on the front: a list of P.S. I Love You — the first letter of many her late husband had secretly arranged. Gerry had thought of everything, even the years when he wouldn't be there.",
     "description": "A young widow discovers a bundle of letters her husband left behind — each one coaxing her back into living, one small brave step at a time. Now a major film starring Hilary Swank."
   },
@@ -28,7 +28,7 @@
     "price": 13.99,
     "year": 2021,
     "genre": "Light Novel",
-    "cover": "/covers/kingproposal.jpeg",
+    "cover": "/covers/king-proposal.jpeg",
     "excerpt": "The king knelt before the girl who had pulled the sword, and every knight in the great hall went quiet. A proposal, he said — not of marriage, but of war, of crowns, and of the end of everything she had ever believed in.",
     "description": "Light novel, volume 1 — The Wish of Masqueraded Color. A chance encounter drags a common girl into a royal bargain that could reshape the kingdom."
   },
@@ -39,7 +39,7 @@
     "price": 10.99,
     "year": 1960,
     "genre": "Classic",
-    "cover": "/covers/mockingbird.jpeg",
+    "cover": "/covers/mockingbird.jpg",
     "excerpt": "When he was nearly thirteen, my brother Jem got his arm badly broken at the elbow. When it healed, and Jem's fears of never being able to play football were assuaged, he was seldom self-conscious about his injury.",
     "description": "The Pulitzer-winning classic of the American South: lawyer Atticus Finch defends an innocent Black man in Depression-era Alabama, while his children Scout and Jem learn what courage really means."
   }
